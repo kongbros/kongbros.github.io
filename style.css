@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 :root {
+    --piece-size: 80px;
     --bg-color: #f8f9fa;
     --primary-color: #007bff;
     --primary-hover: #0056b3;
@@ -88,8 +89,8 @@ h1, h2 {
 
 #puzzle-container {
     display: grid;
-    grid-template-columns: repeat(4, 100px);
-    grid-template-rows: repeat(5, 100px);
+    grid-template-columns: repeat(4, var(--piece-size));
+    grid-template-rows: repeat(5, var(--piece-size));
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     padding: 10px;
@@ -98,9 +99,9 @@ h1, h2 {
 }
 
 .puzzle-piece {
-    width: 100px;
-    height: 100px;
-    background-size: 400px 500px;
+    width: var(--piece-size);
+    height: var(--piece-size);
+    background-size: calc(var(--piece-size) * 4) calc(var(--piece-size) * 5);
     border-radius: 4px;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
@@ -113,8 +114,8 @@ h1, h2 {
 }
 
 .empty-piece {
-    width: 100px;
-    height: 100px;
+    width: var(--piece-size);
+    height: var(--piece-size);
     background: transparent;
     border-radius: 4px;
     box-shadow: none;
@@ -247,4 +248,39 @@ h1, h2 {
     40% { transform: translateX(2px); }
     60% { transform: translateX(-1px); }
     80% { transform: translateX(1px); }
+}
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    #game {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    #stats, #preview-container {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    #game {
+        justify-content: center;
+    }
 }

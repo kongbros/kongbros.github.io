@@ -20,6 +20,17 @@ let puzzleState = [];
 let originalState = [];
 let audioCtx = null;
 
+function updatePieceSize() {
+    const maxWidth = window.innerWidth * 0.9;
+    const calculated = Math.floor(maxWidth / GRID_COLS);
+
+    const size = Math.min(calculated, 100); // PC 최대 제한
+
+    document.documentElement.style.setProperty('--piece-size', size + 'px');
+
+    return size;
+}
+
 // Sound Effect Function
 function playMoveSound() {
     if (!audioCtx) return;
@@ -60,6 +71,7 @@ playAgainBtn.addEventListener('click', () => {
 
 
 function startGame(imageUrl) {
+    const pieceSize = updatePieceSize();
     setupContainer.classList.add('hidden');
     gameContainer.classList.remove('hidden');
     puzzleContainer.innerHTML = '';
@@ -92,7 +104,8 @@ function startGame(imageUrl) {
         if (i < GRID_ROWS * GRID_COLS - 1) {
             piece.classList.add('puzzle-piece');
             piece.style.backgroundImage = `url(${imageUrl})`;
-            piece.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+            piece.style.backgroundPosition = `-${col * pieceSize}px -${row * pieceSize}px`;
+
             piece.dataset.id = i;
         } else {
             piece.classList.add('empty-piece');
@@ -268,7 +281,8 @@ function checkWin() {
             finalPiece.classList.remove('empty-piece');
             finalPiece.classList.add('puzzle-piece');
             finalPiece.style.backgroundImage = previewImage.src ? `url(${previewImage.src})` : 'none';
-            finalPiece.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+            const pieceSize = updatePieceSize();
+            finalPiece.style.backgroundPosition = `-${col * pieceSize}px -${row * pieceSize}px`;
         }
 
         checkAndApplyEffects(); // Final sparkle before showing win message
@@ -280,3 +294,8 @@ function checkWin() {
         }, 500); // Wait a bit for the effect to be seen
     }
 }
+
+window.addEventListener('resize', () => {
+    updatePieceSize();
+});
+window.addEventListener("load", updatePieceSize);
