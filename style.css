@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+    --bg-color: #f8f9fa;
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --light-gray: #e9ecef;
+    --dark-gray: #495057;
+    --text-color: #212529;
+    --white: #fff;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+}
+
+h1, h2 {
+    color: var(--dark-gray);
+    font-weight: 600;
+}
+
+.container {
+    text-align: center;
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    max-width: 900px;
+}
+
+#setup {
+    padding: 20px;
+}
+
+#setup p {
+    margin-bottom: 20px;
+}
+
+#setup label {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+#difficulty {
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--light-gray);
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+}
+
+.file-input-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease;
+}
+
+.file-input-wrapper:hover {
+    background-color: var(--primary-hover);
+}
+
+#image-input {
+    display: none;
+}
+
+
+#game {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+#puzzle-container {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(5, 100px);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 10px;
+    background-color: var(--light-gray);
+    gap: 5px;
+}
+
+.puzzle-piece {
+    width: 100px;
+    height: 100px;
+    background-size: 400px 500px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.puzzle-piece:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.empty-piece {
+    width: 100px;
+    height: 100px;
+    background: transparent;
+    border-radius: 4px;
+    box-shadow: none;
+    cursor: default;
+}
+
+.sidebar {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#stats, #preview-container {
+    background: var(--white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#stats p, #preview-container p {
+    margin: 0 0 10px 0;
+    font-weight: 600;
+}
+
+#stats span {
+    font-weight: 400;
+}
+
+#preview-container img {
+    width: 100%;
+    border-radius: 4px;
+    border: 2px solid var(--light-gray);
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+#win-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.win-content {
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+
+#play-again {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 12px 25px;
+    border-radius: var(--border-radius);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+#play-again:hover {
+    background-color: var(--primary-hover);
+}
+
+.puzzle-piece.sparkle-top {
+    box-shadow: 0 -2px 5px var(--primary-color), 0 2px 5px rgba(0,0,0,0.2) !important;
+    animation: sparkleTop 0.5s ease;
+}
+.puzzle-piece.sparkle-right {
+    box-shadow: 2px 0 5px var(--primary-color), 0 2px 5px rgba(0,0,0,0.2) !important;
+    animation: sparkleRight 0.5s ease;
+}
+.puzzle-piece.sparkle-bottom {
+    box-shadow: 0 2px 5px var(--primary-color), 0 2px 5px rgba(0,0,0,0.2) !important;
+    animation: sparkleBottom 0.5s ease;
+}
+.puzzle-piece.sparkle-left {
+    box-shadow: -2px 0 5px var(--primary-color), 0 2px 5px rgba(0,0,0,0.2) !important;
+    animation: sparkleLeft 0.5s ease;
+}
+
+
+@keyframes sparkleTop {
+    0%, 100% { box-shadow: 0 -2px 5px var(--primary-color), 0 2px 5px rgba(0,0,0,0.2); }
+    50% { box-shadow: 0 -3px 10px #ffdd00, 0 2px 5px rgba(0,0,0,0.2); }
+}
+@keyframes sparkleRight {
+    0%, 100% { box-shadow: 2px 0 5px var(--primary-color), 0 2px 5px rgba(0,0,0,0.2); }
+    50% { box-shadow: 3px 0 10px #ffdd00, 0 2px 5px rgba(0,0,0,0.2); }
+}
+@keyframes sparkleBottom {
+    0%, 100% { box-shadow: 0 2px 5px var(--primary-color), 0 2px 5px rgba(0,0,0,0.2); }
+    50% { box-shadow: 0 3px 10px #ffdd00, 0 2px 5px rgba(0,0,0,0.2); }
+}
+@keyframes sparkleLeft {
+    0%, 100% { box-shadow: -2px 0 5px var(--primary-color), 0 2px 5px rgba(0,0,0,0.2); }
+    50% { box-shadow: -3px 0 10px #ffdd00, 0 2px 5px rgba(0,0,0,0.2); }
+}
+
+.puzzle-piece.shake {
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-2px); }
+    40% { transform: translateX(2px); }
+    60% { transform: translateX(-1px); }
+    80% { transform: translateX(1px); }
+}
