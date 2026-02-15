@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메모리 게임</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>메모리 게임</h1>
+        </header>
+        
+        <main>
+            <section class="game-container">
+                <div class="game-board" id="game-board">
+                    <!-- 카드는 JavaScript로 동적으로 생성됩니다 -->
+                </div>
+            </section>
+        </main>
+        
+        <footer class="game-footer">
+            <div class="game-info">
+                <div class="moves">움직임: <span id="moves-count">0</span> | 시간: <span id="time">00:00</span></div>
+            </div>
+            <div class="game-controls">
+                <button id="restart">다시 시작</button>
+                <button id="show-characters">사용된 캐릭터 보기</button>
+            </div>
+        </footer>
+        
+        <div class="result-container hide" id="result">
+            <div class="result-content">
+                <h2>축하합니다!</h2>
+                <p>게임을 완료했습니다!</p>
+                <p>움직임: <span id="result-moves">0</span></p>
+                <p>시간: <span id="result-time">00:00</span></p>
+                <button id="result-restart">다시 시작</button>
+            </div>
+        </div>
+        
+        <div class="characters-container hide" id="characters-modal">
+            <div class="characters-content">
+                <h2>이번 게임에 사용된 캐릭터들</h2>
+                <div class="characters-grid" id="characters-grid-modal">
+                    <!-- 캐릭터들은 JavaScript로 동적으로 생성됩니다 -->
+                </div>
+                <button id="close-characters">닫기</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="character-grid.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캐릭터 프리뷰 - 디버그용</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="preview-body">
+    <div class="container">
+        <header>
+            <h1>캐릭터 프리뷰</h1>
+            <div class="subtitle">characters.png 파일의 모든 캐릭터 (5x6 그리드)</div>
+            <div class="grid-info">
+                총 30개 캐릭터 | 그리드: 5열 × 6행 | ID: 0-29
+            </div>
+        </header>
+        
+        <main>
+            <section class="characters-grid" id="characters-grid">
+                <!-- 캐릭터들은 JavaScript로 동적으로 생성됩니다 -->
+            </section>
+        </main>
+    </div>
+
+    <script src="character-grid.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            new CharacterGrid({
+                container: document.getElementById('characters-grid')
+            });
+        });
+    </script>
+</body>
+</html>
