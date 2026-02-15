@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jigsaw Puzzle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Jigsaw Puzzle</h1>
+
+        <div id="setup">
+            <p>Select a difficulty and an image to start the game.</p>
+            <div>
+                <label for="difficulty">Difficulty:</label>
+                <select id="difficulty">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            <br>
+             <div>
+                <label for="image-input" class="file-input-wrapper">
+                    Select Image
+                </label>
+                <input type="file" id="image-input" accept="image/*">
+            </div>
+        </div>
+
+        <div id="game" class="hidden">
+            <div id="puzzle-container"></div>
+            <div class="sidebar">
+                <div id="stats">
+                    <p>Time: <span id="time">0</span>s</p>
+                    <p>Moves: <span id="moves">0</span></p>
+                </div>
+                <div id="preview-container">
+                    <p>Original</p>
+                    <img id="preview-image" src="" alt="Original Image Preview">
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div id="win-message" class="hidden">
+        <div class="win-content">
+            <h2>You Win!</h2>
+            <p>Your score is: <span id="score">0</span></p>
+            <button id="play-again">Play Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

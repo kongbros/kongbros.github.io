@@ -1,66 +1,248 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jigsaw Puzzle</title>
-    <link rel="stylesheet" href="style.css">
+    <title>게임 포털</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: 3.5em;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s ease;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3em;
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease 0.5s;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease 1s;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            transition: transform 0.6s;
+            transform: translateX(-100%);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .game-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .game-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #4a90e2;
+            animation: bounce 2s infinite;
+        }
+
+        .game-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .game-description {
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1em;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5em;
+            }
+            
+            .subtitle {
+                font-size: 1.1em;
+                margin-bottom: 30px;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .game-card {
+                padding: 30px 20px;
+            }
+            
+            .game-icon {
+                font-size: 2.5em;
+            }
+            
+            .game-title {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .game-card {
+                padding: 25px 15px;
+            }
+            
+            .main-title {
+                font-size: 2em;
+            }
+        }
+    </style>
 </head>
 <body>
-
     <div class="container">
-        <h1>Jigsaw Puzzle</h1>
-
-        <div id="setup">
-            <p>Select a difficulty and an image to start the game.</p>
-            <div>
-                <label for="difficulty">Difficulty:</label>
-                <select id="difficulty">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-            </div>
-            <br>
-             <div>
-                <label for="image-input" class="file-input-wrapper">
-                    Select Image
-                </label>
-                <input type="file" id="image-input" accept="image/*">
-            </div>
-        </div>
-
-        <div id="game" class="hidden">
-            <div id="puzzle-container"></div>
-            <div class="sidebar">
-                <div id="stats">
-                    <p>Time: <span id="time">0</span>s</p>
-                    <p>Moves: <span id="moves">0</span></p>
+        <h1 class="main-title">
+            <i class="fas fa-gamepad"></i> 게임 포털
+        </h1>
+        <p class="subtitle">다양한 게임을 즐겨보세요!</p>
+        
+        <div class="games-grid">
+            <a href="jigsaw-puzzle/index.html" class="game-card">
+                <div class="game-icon">
+                    <i class="fas fa-puzzle-piece"></i>
                 </div>
-                <div id="preview-container">
-                    <p>Original</p>
-                    <img id="preview-image" src="" alt="Original Image Preview">
+                <h2 class="game-title">직소 퍼즐</h2>
+                <p class="game-description">
+                    조각 맞추기 퍼즐 게임입니다. 다양한 난이도의 퍼즐을 즐길 수 있습니다.
+                    시각적 인지와 논리적 사고를 함께하는 두뇌 자극 게임입니다.
+                </p>
+            </a>
+            
+            <a href="memory-game/index.html" class="game-card">
+                <div class="game-icon">
+                    <i class="fas fa-brain"></i>
                 </div>
-            </div>
+                <h2 class="game-title">메모리 게임</h2>
+                <p class="game-description">
+                    캐릭터 짝맞추기 게임입니다. 30개의 캐릭터 중 랜덤으로 10개를 선택하여 짝을 찾아보세요.
+                    타이머와 움직임 횟수를 기록하여 최적의 기록에 도전해보세요!
+                </p>
+            </a>
         </div>
         
+        <footer class="footer">
+            <p class="footer-text">
+                <i class="fas fa-code"></i> 제작된 게임 | 
+                <i class="fas fa-heart"></i> 재미로 만들어진 게임
+            </p>
+        </footer>
     </div>
-
-    <div id="win-message" class="hidden">
-        <div class="win-content">
-            <h2>You Win!</h2>
-            <p>Your score is: <span id="score">0</span></p>
-            <button id="play-again">Play Again</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
 </body>
 </html>

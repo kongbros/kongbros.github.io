@@ -68,7 +68,6 @@ class CharacterGrid {
                 x: adjustedX,
                 y: adjustedY
             });
-            console.log(characters[characters.length - 1]);
         }
         return characters;
     }
