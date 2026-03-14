@@ -159,6 +159,7 @@
         .game-card:nth-child(1) { border-color: #ffb6c1; }
         .game-card:nth-child(2) { border-color: #b6e0ff; }
         .game-card:nth-child(3) { border-color: #c1ffb6; }
+        .game-card:nth-child(4) { border-color: #e0b6ff; }
 
         .game-card:nth-child(1):hover {
             transform: translateY(-12px) rotate(-1deg);
@@ -178,6 +179,12 @@
             box-shadow: 0 20px 40px rgba(76, 255, 180, 0.3);
         }
 
+        .game-card:nth-child(4):hover {
+            transform: translateY(-12px) rotate(1deg);
+            border-color: #c485ff;
+            box-shadow: 0 20px 40px rgba(196, 76, 255, 0.3);
+        }
+
         .game-emoji {
             font-size: 3.5em;
             margin-bottom: 15px;
@@ -188,6 +195,7 @@
         .game-card:nth-child(1) .game-emoji { animation-delay: 0s; }
         .game-card:nth-child(2) .game-emoji { animation-delay: 0.3s; }
         .game-card:nth-child(3) .game-emoji { animation-delay: 0.6s; }
+        .game-card:nth-child(4) .game-emoji { animation-delay: 0.9s; }
 
         @keyframes wiggle {
             0%, 100% { transform: rotate(-5deg); }
@@ -204,6 +212,7 @@
         .game-card:nth-child(1) .game-title { color: #e75480; }
         .game-card:nth-child(2) .game-title { color: #4a90d9; }
         .game-card:nth-child(3) .game-title { color: #50b87d; }
+        .game-card:nth-child(4) .game-title { color: #9b59b6; }
 
         .game-description {
             font-size: 1em;
@@ -233,6 +242,11 @@
         .game-card:nth-child(3) .game-badge {
             background: linear-gradient(90deg, #c1ffb6, #d0ffc6);
             color: #198754;
+        }
+
+        .game-card:nth-child(4) .game-badge {
+            background: linear-gradient(90deg, #e0b6ff, #eec6ff);
+            color: #7b2d8b;
         }
 
         .footer {
@@ -353,6 +367,16 @@
                     친구와 함께 두근두근 대결해봐요~
                 </p>
                 <span class="game-badge">🏆 친구와 대결!</span>
+            </a>
+
+            <a href="jump-map/index.html" class="game-card">
+                <span class="game-emoji">🦘</span>
+                <h2 class="game-title">점프맵</h2>
+                <p class="game-description">
+                    내 캐릭터를 골라서 점프점프!
+                    3개의 레벨을 모두 클리어해봐요~
+                </p>
+                <span class="game-badge">🎮 점프 마스터!</span>
             </a>
         </div>
 
