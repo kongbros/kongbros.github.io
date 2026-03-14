@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게임 포털</title>
+    <title>콩브로스 게임랜드</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,245 +14,353 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Jua', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4f3 25%, #e8f4ff 50%, #f0fff4 75%, #fff9e6 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 떠다니는 장식들 */
+        .floating-decorations {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .decoration {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+            font-size: 2em;
+        }
+
+        .decoration:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .decoration:nth-child(2) { top: 20%; right: 10%; animation-delay: 1s; }
+        .decoration:nth-child(3) { top: 60%; left: 8%; animation-delay: 2s; }
+        .decoration:nth-child(4) { top: 80%; right: 5%; animation-delay: 0.5s; }
+        .decoration:nth-child(5) { top: 40%; left: 3%; animation-delay: 1.5s; }
+        .decoration:nth-child(6) { top: 70%; right: 12%; animation-delay: 2.5s; }
+        .decoration:nth-child(7) { top: 15%; left: 15%; animation-delay: 3s; }
+        .decoration:nth-child(8) { top: 85%; left: 20%; animation-delay: 0.8s; }
+        .decoration:nth-child(9) { top: 30%; right: 3%; animation-delay: 1.8s; }
+        .decoration:nth-child(10) { top: 50%; right: 8%; animation-delay: 2.2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             width: 100%;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .main-title {
-            font-size: 3.5em;
-            color: white;
-            margin-bottom: 20px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-            animation: fadeInDown 1s ease;
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: rainbow 3s linear infinite, bounceIn 1s ease;
+            background: linear-gradient(90deg, #ff6b9d, #c44cff, #6bbaff, #4cffb4, #ffe14c, #ff6b9d);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(2px 2px 4px rgba(255, 150, 200, 0.5));
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .subtitle {
-            color: rgba(255, 255, 255, 0.9);
+            color: #b06ab3;
             font-size: 1.3em;
-            margin-bottom: 50px;
-            animation: fadeInUp 1s ease 0.5s;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .subtitle .sparkle {
+            display: inline-block;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.8; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-            animation: fadeIn 1s ease 1s;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
         }
 
         .game-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px 30px;
+            background: linear-gradient(145deg, #ffffff 0%, #fff5fa 100%);
+            border-radius: 30px;
+            padding: 30px 25px;
             text-decoration: none;
-            color: white;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #555;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid transparent;
             position: relative;
             overflow: hidden;
+            box-shadow:
+                0 10px 30px rgba(255, 150, 200, 0.2),
+                0 5px 15px rgba(150, 200, 255, 0.15);
         }
 
         .game-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.8) 50%,
+                transparent 60%
+            );
+            transform: rotate(45deg) translateX(-100%);
             transition: transform 0.6s;
-            transform: translateX(-100%);
-        }
-
-        .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.4);
         }
 
         .game-card:hover::before {
-            transform: translateX(0);
+            transform: rotate(45deg) translateX(100%);
         }
 
-        .game-icon {
-            font-size: 3em;
-            margin-bottom: 20px;
-            color: #4a90e2;
-            animation: bounce 2s infinite;
+        .game-card:nth-child(1) { border-color: #ffb6c1; }
+        .game-card:nth-child(2) { border-color: #b6e0ff; }
+        .game-card:nth-child(3) { border-color: #c1ffb6; }
+
+        .game-card:nth-child(1):hover {
+            transform: translateY(-12px) rotate(-1deg);
+            border-color: #ff85a2;
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.3);
+        }
+
+        .game-card:nth-child(2):hover {
+            transform: translateY(-12px) rotate(1deg);
+            border-color: #85c4ff;
+            box-shadow: 0 20px 40px rgba(107, 186, 255, 0.3);
+        }
+
+        .game-card:nth-child(3):hover {
+            transform: translateY(-12px) rotate(-1deg);
+            border-color: #85ff9e;
+            box-shadow: 0 20px 40px rgba(76, 255, 180, 0.3);
+        }
+
+        .game-emoji {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            display: block;
+            animation: wiggle 2s ease-in-out infinite;
+        }
+
+        .game-card:nth-child(1) .game-emoji { animation-delay: 0s; }
+        .game-card:nth-child(2) .game-emoji { animation-delay: 0.3s; }
+        .game-card:nth-child(3) .game-emoji { animation-delay: 0.6s; }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
         }
 
         .game-title {
-            font-size: 1.8em;
+            font-size: 1.6em;
             font-weight: 600;
-            margin-bottom: 15px;
-            color: white;
+            margin-bottom: 12px;
+            color: #6b5b95;
         }
 
+        .game-card:nth-child(1) .game-title { color: #e75480; }
+        .game-card:nth-child(2) .game-title { color: #4a90d9; }
+        .game-card:nth-child(3) .game-title { color: #50b87d; }
+
         .game-description {
-            font-size: 1.1em;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.5;
+            font-size: 1em;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .game-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .game-card:nth-child(1) .game-badge {
+            background: linear-gradient(90deg, #ffb6c1, #ffc0cb);
+            color: #d63384;
+        }
+
+        .game-card:nth-child(2) .game-badge {
+            background: linear-gradient(90deg, #b6e0ff, #c0e8ff);
+            color: #0d6efd;
+        }
+
+        .game-card:nth-child(3) .game-badge {
+            background: linear-gradient(90deg, #c1ffb6, #d0ffc6);
+            color: #198754;
         }
 
         .footer {
-            margin-top: 60px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            margin-top: 40px;
+            padding: 20px;
+            background: linear-gradient(90deg, rgba(255,182,193,0.3), rgba(182,224,255,0.3), rgba(193,255,182,0.3));
+            border-radius: 25px;
             backdrop-filter: blur(10px);
         }
 
         .footer-text {
-            color: rgba(255, 255, 255, 0.9);
+            color: #b06ab3;
             font-size: 1em;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .footer-hearts {
+            font-size: 1.2em;
+            animation: heartbeat 1s ease-in-out infinite;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
-        }
-
+        /* 반응형 */
         @media (max-width: 768px) {
             .main-title {
-                font-size: 2.5em;
+                font-size: 2.2em;
             }
-            
+
             .subtitle {
                 font-size: 1.1em;
                 margin-bottom: 30px;
             }
-            
+
             .games-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
             .game-card {
-                padding: 30px 20px;
+                padding: 25px 20px;
             }
-            
-            .game-icon {
-                font-size: 2.5em;
+
+            .game-emoji {
+                font-size: 3em;
             }
-            
+
             .game-title {
+                font-size: 1.4em;
+            }
+
+            .decoration {
                 font-size: 1.5em;
             }
         }
 
         @media (max-width: 480px) {
-            .games-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .game-card {
-                padding: 25px 15px;
-            }
-            
             .main-title {
-                font-size: 2em;
+                font-size: 1.8em;
+            }
+
+            .decoration:nth-child(n+6) {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
+    <div class="floating-decorations">
+        <span class="decoration">⭐</span>
+        <span class="decoration">🌸</span>
+        <span class="decoration">💖</span>
+        <span class="decoration">🦋</span>
+        <span class="decoration">✨</span>
+        <span class="decoration">🌈</span>
+        <span class="decoration">💫</span>
+        <span class="decoration">🍀</span>
+        <span class="decoration">🎀</span>
+        <span class="decoration">💝</span>
+    </div>
+
     <div class="container">
-        <h1 class="main-title">
-            <i class="fas fa-gamepad"></i> 게임 포털
-        </h1>
-        <p class="subtitle">다양한 게임을 즐겨보세요!</p>
-        
+        <h1 class="main-title">🎮 콩브로스 게임랜드 🎮</h1>
+        <p class="subtitle">
+            <span class="sparkle">✨</span>
+            재미있는 게임이 가득해요!
+            <span class="sparkle">✨</span>
+        </p>
+
         <div class="games-grid">
             <a href="jigsaw-puzzle/index.html" class="game-card">
-                <div class="game-icon">
-                    <i class="fas fa-puzzle-piece"></i>
-                </div>
+                <span class="game-emoji">🧩</span>
                 <h2 class="game-title">직소 퍼즐</h2>
                 <p class="game-description">
-                    조각 맞추기 퍼즐 게임입니다. 다양한 난이도의 퍼즐을 즐길 수 있습니다.
-                    시각적 인지와 논리적 사고를 함께하는 두뇌 자극 게임입니다.
+                    예쁜 그림을 조각조각 맞춰보세요!
+                    쉬운 것부터 어려운 것까지 도전해봐요~
                 </p>
+                <span class="game-badge">🎨 두뇌 쑥쑥!</span>
             </a>
-            
+
             <a href="memory-game/index.html" class="game-card">
-                <div class="game-icon">
-                    <i class="fas fa-brain"></i>
-                </div>
+                <span class="game-emoji">🃏</span>
                 <h2 class="game-title">메모리 게임</h2>
                 <p class="game-description">
-                    캐릭터 짝맞추기 게임입니다. 30개의 캐릭터 중 랜덤으로 10개를 선택하여 짝을 찾아보세요.
-                    타이머와 움직임 횟수를 기록하여 최적의 기록에 도전해보세요!
+                    똑같은 카드 짝을 찾아보세요!
+                    기억력이 좋아지는 신기한 게임이에요~
                 </p>
+                <span class="game-badge">🧠 기억력 짱!</span>
             </a>
 
             <a href="oasis-knight/index.html" class="game-card">
-                <div class="game-icon">
-                    <i class="fas fa-chess-knight"></i>
-                </div>
+                <span class="game-emoji">🐴</span>
                 <h2 class="game-title">오아시스 나이트</h2>
                 <p class="game-description">
-                    사막을 건너 오아시스에 먼저 도착하라! 나이트만 사용하는 변칙 체스 게임입니다.
-                    L자 이동과 직진 이동을 활용해 상대보다 먼저 중앙의 오아시스를 점령하세요.
+                    사막을 건너 오아시스에 먼저 도착해요!
+                    친구와 함께 두근두근 대결해봐요~
                 </p>
+                <span class="game-badge">🏆 친구와 대결!</span>
             </a>
         </div>
-        
+
         <footer class="footer">
             <p class="footer-text">
-                <i class="fas fa-code"></i> 제작된 게임 | 
-                <i class="fas fa-heart"></i> 재미로 만들어진 게임
+                <span class="footer-hearts">💖💜💙</span>
+                콩브로스와 함께 즐거운 시간 보내요!
+                <span class="footer-hearts">💙💜💖</span>
             </p>
         </footer>
     </div>
