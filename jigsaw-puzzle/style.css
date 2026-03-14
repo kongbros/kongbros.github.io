@@ -16,12 +16,63 @@
 body {
     font-family: 'Poppins', sans-serif;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
+}
+
+/* 상단 네비게이션 */
+.top-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 15px;
+    background: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-home {
+    color: #ffd700;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9em;
+    padding: 5px 12px;
+    border-radius: 15px;
+    background: rgba(255, 215, 0, 0.2);
+    transition: all 0.2s;
+}
+
+.nav-home:hover {
+    background: rgba(255, 215, 0, 0.4);
+}
+
+.nav-games {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-games a, .nav-games span {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 0.85em;
+    padding: 5px 10px;
+    border-radius: 12px;
+    transition: all 0.2s;
+}
+
+.nav-games a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-current {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.25);
+    font-weight: 600;
 }
 
 h1, h2 {
@@ -36,6 +87,11 @@ h1, h2 {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     max-width: 900px;
+    margin: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #setup {
