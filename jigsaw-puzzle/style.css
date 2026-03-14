@@ -19,7 +19,11 @@ body {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    background-color: var(--bg-color);
+    background-color: #ffe4ef;
+    background-image:
+        linear-gradient(rgba(219, 0, 90, 0.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(219, 0, 90, 0.18) 1px, transparent 1px);
+    background-size: 44px 44px;
     color: var(--text-color);
     margin: 0;
 }

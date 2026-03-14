@@ -66,5 +66,111 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+    // ===== 웅장한 배경음악 (Web Audio API) =====
+    let audioCtx = null;
+    let musicStarted = false;
+
+    function startMusic() {
+        if (musicStarted) return;
+        musicStarted = true;
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        const master = audioCtx.createGain();
+        master.gain.value = 0.13;
+        master.connect(audioCtx.destination);
+
+        // 딜레이(에코) 리버브 효과
+        const delay = audioCtx.createDelay(1.0);
+        delay.delayTime.value = 0.45;
+        const fbGain = audioCtx.createGain();
+        fbGain.gain.value = 0.38;
+        const wetGain = audioCtx.createGain();
+        wetGain.gain.value = 0.28;
+        delay.connect(fbGain);
+        fbGain.connect(delay);
+        delay.connect(wetGain);
+        wetGain.connect(audioCtx.destination);
+
+        // 로우패스 필터 (부드럽게)
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 900;
+        filter.connect(master);
+        filter.connect(delay);
+
+        // 화음 드론 (D단조 - D, F, A, C)
+        const droneNotes = [73.42, 87.31, 110.0, 130.81]; // D2, F2, A2, C3
+        droneNotes.forEach((freq, i) => {
+            const osc  = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = i === 0 ? 'sawtooth' : 'sine';
+            osc.frequency.value = freq;
+            // 미세한 디튠으로 풍성함 추가
+            osc.detune.value = (i % 2 === 0 ? 1 : -1) * 4;
+            gain.gain.value = i === 0 ? 0.35 : 0.2;
+            osc.connect(gain);
+            gain.connect(filter);
+            osc.start();
+        });
+
+        // 웅장한 멜로디 스케줄러
+        const melody = [
+            // [freq, time, duration]
+            [293.66, 0.0,  1.6],  // D4
+            [261.63, 1.6,  0.8],  // C4
+            [293.66, 2.4,  0.8],  // D4
+            [349.23, 3.2,  1.6],  // F4
+            [329.63, 4.8,  1.6],  // E4
+            [293.66, 6.4,  1.6],  // D4
+            [261.63, 8.0,  0.8],  // C4
+            [220.00, 8.8,  1.6],  // A3
+            [246.94, 10.4, 0.8],  // B3
+            [261.63, 11.2, 0.8],  // C4
+            [293.66, 12.0, 2.4],  // D4
+            [349.23, 14.4, 0.8],  // F4
+            [392.00, 15.2, 1.6],  // G4
+            [440.00, 16.8, 1.6],  // A4
+            [392.00, 18.4, 0.8],  // G4
+            [349.23, 19.2, 0.8],  // F4
+            [329.63, 20.0, 0.8],  // E4
+            [293.66, 20.8, 2.4],  // D4
+        ];
+
+        const LOOP = 23.2;
+
+        function scheduleMelody(offset) {
+            melody.forEach(([freq, t, dur]) => {
+                const osc  = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0, audioCtx.currentTime + offset + t);
+                gain.gain.linearRampToValueAtTime(0.55, audioCtx.currentTime + offset + t + 0.06);
+                gain.gain.setValueAtTime(0.55, audioCtx.currentTime + offset + t + dur - 0.1);
+                gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + offset + t + dur);
+                osc.connect(gain);
+                gain.connect(filter);
+                osc.start(audioCtx.currentTime + offset + t);
+                osc.stop(audioCtx.currentTime + offset + t + dur + 0.05);
+            });
+        }
+
+        // 첫 루프 바로, 두 번째 루프 예약, 이후 반복
+        scheduleMelody(0);
+        scheduleMelody(LOOP);
+        let loops = 2;
+        const loopTimer = setInterval(() => {
+            scheduleMelody(LOOP * loops);
+            loops++;
+            if (loops > 50) clearInterval(loopTimer);
+        }, LOOP * 1000);
+    }
+
+    // 첫 인터랙션 시 음악 시작
+    document.addEventListener('click', startMusic, { once: true });
+    document.addEventListener('keydown', startMusic, { once: true });
+    document.addEventListener('touchstart', startMusic, { once: true });
+    </script>
 </body>
 </html>

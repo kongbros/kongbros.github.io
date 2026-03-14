@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>점프맵</title>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,6 +20,7 @@
 
     <!-- 캐릭터 선택 화면 -->
     <div id="select-screen">
+        <canvas id="select-bg"></canvas>
         <h1>점프맵</h1>
         <p class="desc">캐릭터를 골라보세요!</p>
         <div class="emoji-grid" id="emoji-grid"></div>
@@ -31,8 +32,15 @@
 
     <!-- 게임 화면 -->
     <div id="game-screen" class="hidden">
+        <div id="level-intro" class="hidden">
+            <span id="level-intro-text"></span>
+        </div>
         <div class="game-hud">
             <span id="level-label">레벨 1</span>
+            <div class="coin-display">
+                <span class="coin-icon">🪙</span>
+                <span id="coin-count">0</span>
+            </div>
             <span id="hud-emoji"></span>
             <button id="restart-btn">다시시작</button>
         </div>
@@ -54,17 +62,45 @@
             <div class="popup-emoji" id="clear-emoji"></div>
             <h2 id="clear-title"></h2>
             <p id="clear-msg"></p>
+
+            <div class="clear-coins">
+                <span>🪙</span>
+                <span>보유 코인 :</span>
+                <span id="clear-coin-count">0</span>
+            </div>
+
+            <div class="pass-shop">
+                <div class="pass-card">
+                    <span class="pass-icon">🎫</span>
+                    <div class="pass-info">
+                        <span class="pass-name">레벨 패스권</span>
+                        <span class="pass-desc">다음 레벨을 건너뛰어요!</span>
+                    </div>
+                    <button id="buy-pass-btn">30 🪙</button>
+                </div>
+                <p class="pass-status" id="pass-status"></p>
+            </div>
+
             <button id="next-btn">다음 레벨 →</button>
         </div>
     </div>
 
     <!-- 전체 클리어 화면 -->
     <div id="complete-screen" class="hidden overlay">
-        <div class="popup">
-            <div class="popup-emoji" id="complete-emoji"></div>
-            <h2>모든 레벨 클리어!</h2>
-            <p>대단해요! 진정한 점프 마스터!</p>
-            <button id="replay-btn">처음부터</button>
+        <div class="popup complete-popup">
+            <div class="throne-scene">
+                <div class="throne-crown">👑</div>
+                <div class="throne-character">
+                    <span id="complete-emoji"></span>
+                    <span class="throne-chair">🪑</span>
+                </div>
+            </div>
+            <h2 class="king-title">당신은 점프맵의 왕입니다!</h2>
+            <p>모든 레벨을 정복했어요. 진정한 챔피언!</p>
+            <div class="complete-btns">
+                <a href="../index.html" class="complete-btn main-btn">🏠 메인 화면으로</a>
+                <button id="replay-btn" class="complete-btn char-btn">🎮 캐릭터 다시 고르기</button>
+            </div>
         </div>
     </div>
 
