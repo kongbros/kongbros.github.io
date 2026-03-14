@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오아시스 나이트</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>오아시스 나이트</h1>
+            <div class="turn-badge" id="turn-badge">
+                <span class="turn-text" id="turn-text">백 차례</span>
+            </div>
+        </header>
+
+        <main>
+            <div class="board-container" id="board-container">
+                <div class="board" id="board"></div>
+            </div>
+
+            <div class="controls">
+                <button id="restart">다시</button>
+                <button id="show-rules">규칙</button>
+            </div>
+        </main>
+
+        <div class="modal hide" id="result-modal">
+            <div class="modal-content">
+                <h2 id="winner-text">승리!</h2>
+                <p id="winner-detail"></p>
+                <button id="result-restart">다시 시작</button>
+            </div>
+        </div>
+
+        <div class="modal hide" id="rules-modal">
+            <div class="modal-content rules-content">
+                <h2>게임 규칙</h2>
+                <h4>이동 방법</h4>
+                <ul>
+                    <li><strong>L자 이동:</strong> 체스 나이트처럼 2칸+1칸 점프</li>
+                    <li><strong>직진 이동:</strong> 상하좌우로 장애물까지 직진</li>
+                </ul>
+                <h4>제약 사항</h4>
+                <ul>
+                    <li>L자 이동으로 초원에 진입 불가</li>
+                    <li>단, 초원에서 사막으로 탈출은 가능</li>
+                    <li>직진은 반드시 장애물 직전까지 이동</li>
+                    <li>상대 기물을 잡을 수 없음</li>
+                </ul>
+                <h4>승리 조건</h4>
+                <p>먼저 오아시스에 도착하면 승리!</p>
+                <button id="close-rules">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
