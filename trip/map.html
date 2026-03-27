@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>제천 가족 여행 동선 (2026-03-28~29)</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #f5f5f5; }
+
+    #header {
+      background: #2c3e50;
+      color: white;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #header h1 { font-size: 17px; font-weight: 700; }
+    #header p  { font-size: 12px; color: #aab; }
+
+    #legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #dde;
+    }
+    .legend-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.5);
+    }
+
+    #container {
+      display: flex;
+      height: calc(100vh - 56px);
+    }
+
+    #sidebar {
+      width: 310px;
+      min-width: 260px;
+      overflow-y: auto;
+      background: white;
+      border-right: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .day-section { margin-bottom: 4px; }
+    .day-header {
+      background: #ecf0f1;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #555;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .stop-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.15s;
+    }
+    .stop-item:hover { background: #f8f9fa; }
+    .stop-item.active { background: #eaf4ff; }
+
+    .stop-num {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .stop-info { flex: 1; }
+    .stop-time { font-size: 11px; color: #999; margin-bottom: 2px; }
+    .stop-name { font-size: 13px; font-weight: 600; color: #222; }
+    .stop-desc { font-size: 11px; color: #777; margin-top: 2px; line-height: 1.4; }
+    .stop-warn { font-size: 11px; color: #e67e22; margin-top: 3px; font-weight: 600; }
+
+    #map { flex: 1; }
+
+    /* Custom popup */
+    .custom-popup .leaflet-popup-content-wrapper {
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      padding: 0;
+    }
+    .custom-popup .leaflet-popup-content {
+      margin: 0;
+      min-width: 200px;
+    }
+    .popup-header {
+      padding: 10px 14px 8px;
+      border-radius: 10px 10px 0 0;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .popup-body {
+      padding: 8px 14px 10px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #333;
+    }
+    .popup-time { color: #888; font-size: 11px; margin-bottom: 4px; }
+    .popup-warn { color: #e67e22; font-weight: 600; margin-top: 4px; }
+
+    @media (max-width: 600px) {
+      #sidebar { width: 100%; height: 220px; overflow-x: auto; overflow-y: hidden; display: flex; }
+      #container { flex-direction: column; }
+      .day-section { display: flex; min-width: max-content; }
+      .day-header { writing-mode: vertical-rl; padding: 8px 4px; min-height: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="header">
+  <div>
+    <h1>제천 가족 여행 동선</h1>
+    <p>2026년 3월 28일(토) ~ 29일(일)</p>
+  </div>
+  <div id="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#3498db"></div>이동/출발</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#27ae60"></div>Day 1 관광</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div>숙소</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#9b59b6"></div>Day 2 관광</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f39c12"></div>식사</div>
+    <div class="legend-item" style="cursor:pointer" onclick="toggleRef()">
+      <div class="legend-dot" style="background:white;border:2px solid #aaa;"></div>
+      <span id="refToggleLabel">추천장소 숨기기</span>
+    </div>
+  </div>
+</div>
+
+<div id="container">
+  <div id="sidebar">
+    <div class="day-section">
+      <div class="day-header">서울 출발</div>
+      <div class="stop-item" onclick="flyTo(0)" data-idx="0">
+        <div class="stop-num" style="background:#3498db">S</div>
+        <div class="stop-info">
+          <div class="stop-time">08:00</div>
+          <div class="stop-name">성북구 출발</div>
+          <div class="stop-desc">북악산로 847 · 2대 동시 출발</div>
+        </div>
+      </div>
+      <div class="stop-item" onclick="flyTo(1)" data-idx="1">
+        <div class="stop-num" style="background:#3498db">1</div>
+        <div class="stop-info">
+          <div class="stop-time">09:30~10:00</div>
+          <div class="stop-name">충주휴게소</div>
+          <div class="stop-desc">아침 식사 겸 휴식 · 화장실</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-section">
+      <div class="day-header">Day 1 — 3/28 (토)</div>
+      <div class="stop-item" onclick="flyTo(2)" data-idx="2">
+        <div class="stop-num" style="background:#f39c12">2</div>
+        <div class="stop-info">
+          <div class="stop-time">10:30~11:00 도착 후</div>
+          <div class="stop-name">이마트 제천점</div>
+          <div class="stop-desc">저녁 바베큐 고기 구매 · 도착 직후 경유</div>
+        </div>
+      </div>
+      <div class="stop-item" onclick="flyTo(3)" data-idx="3">
+        <div class="stop-num" style="background:#27ae60">3</div>
+        <div class="stop-info">
+          <div class="stop-time">11:00~12:30</div>
+          <div class="stop-name">의림지</div>
+          <div class="stop-desc">둘레 1.8km 완전 평지 · 봄 경치 · 무료</div>
+          <div class="stop-warn">★ 임산부 최적</div>
+        </div>
+      </div>
+      <div class="stop-item" onclick="flyTo(4)" data-idx="4">
+        <div class="stop-num" style="background:#f39c12">4</div>
+        <div class="stop-info">
+          <div class="stop-time">12:30~14:00</div>
+          <div class="stop-name">점심 — 황기닭백숙</div>
+          <div class="stop-desc">제천 시내 · 황기 보양식 · 임산부 추천</div>
+        </div>
+      </div>
+      <div class="stop-item" onclick="flyTo(5)" data-idx="5">
+        <div class="stop-num" style="background:#27ae60">5</div>
+        <div class="stop-info">
+          <div class="stop-time">14:30~16:00</div>
+          <div class="stop-name">청풍문화재단지</div>
+          <div class="stop-desc">수몰 문화재 야외 박물관 · 역사 체험 · 3,000원</div>
+        </div>
+      </div>
+      <div class="stop-item" onclick="flyTo(6)" data-idx="6">
+        <div class="stop-num" style="background:#27ae60">6</div>
+        <div class="stop-info">
+          <div class="stop-time">16:00~16:45</div>
+          <div class="stop-name">청풍나루 (유람선)</div>
+          <div class="stop-desc">옥순봉·구담봉 왕복 1시간 · 043-647-4566</div>
+          <div class="stop-warn">⚠ 임산부 의향 따라 선택</div>
+        </div>
+      </div>
+      <div class="stop-item" onclick="flyTo(7)" data-idx="7">
+        <div class="stop-num" style="background:#e74c3c">7</div>
+        <div class="stop-info">
+          <div class="stop-time">17:00~17:30 체크인</div>
+          <div class="stop-name">제천 경찰 수련원</div>
+          <div class="stop-desc">청풍면 청풍호로 1069 인근</div>
+        </div>
+      </div>
+      <div class="stop-item" onclick="flyTo(8)" data-idx="8">
+        <div class="stop-num" style="background:#f39c12">8</div>
+        <div class="stop-info">
+          <div class="stop-time">18:30~20:30</div>
+          <div class="stop-name">저녁 — 숙소 바베큐</div>
+          <div class="stop-desc">삼겹살·목살 구워먹기 · 아이들 소시지</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-section">
+      <div class="day-header">Day 2 — 3/29 (일)</div>
+      <div class="stop-item" onclick="flyTo(9)" data-idx="9">
+        <div class="stop-num" style="background:#9b59b6">9</div>
+        <div class="stop-info">
+          <div class="stop-time">09:00~11:00 (체크아웃 후)</div>
+          <div class="stop-name">월악산 송계계곡</div>
+          <div class="stop-desc">계곡 입구~덕주사 · 완만한 산책로 · 봄 새싹</div>
+          <div class="stop-warn">⚠ 계곡 노면 미끄럼 주의</div>
+        </div>
+      </div>
+      <div class="stop-item" onclick="flyTo(10)" data-idx="10">
+        <div class="stop-num" style="background:#f39c12">10</div>
+        <div class="stop-info">
+          <div class="stop-time">11:30~13:00</div>
+          <div class="stop-name">점심 — 덕주골산장 (1순위)</div>
+          <div class="stop-desc">산채비빔밥·버섯전골·손두부 · 계곡 바로 옆 · 043-653-8352</div>
+          <div class="stop-warn">★ 담백한 향토 음식 · 방문 전 전화 필수</div>
+        </div>
+      </div>
+      <div class="stop-item" onclick="flyTo(11)" data-idx="11">
+        <div class="stop-num" style="background:#f39c12">11</div>
+        <div class="stop-info">
+          <div class="stop-time">11:30~13:00 (대안)</div>
+          <div class="stop-name">점심 — 월악산장 (2순위)</div>
+          <div class="stop-desc">더덕구이·도토리묵·청국장정식 · 연중무휴 · 043-651-5615</div>
+        </div>
+      </div>
+      <div class="stop-item" onclick="flyTo(12)" data-idx="12">
+        <div class="stop-num" style="background:#3498db">E</div>
+        <div class="stop-info">
+          <div class="stop-time">13:30 출발 → 16:00 도착</div>
+          <div class="stop-name">서울 귀경</div>
+          <div class="stop-desc">성북구 북악산로 847</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="map"></div>
+</div>
+
+<!-- 추천 장소 패널 (지도 위 플로팅) -->
+<div id="ref-panel" style="
+  position:absolute; bottom:20px; right:20px;
+  background:white; border-radius:10px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  width:220px; max-height:360px; overflow-y:auto;
+  z-index:1000; font-family:'Apple SD Gothic Neo',sans-serif;
+  display:none;
+">
+  <div style="background:#546e7a;color:white;padding:10px 14px;border-radius:10px 10px 0 0;font-size:13px;font-weight:700;">
+    📍 주변 추천 장소
+  </div>
+  <div id="ref-list" style="padding:4px 0;"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // 장소 데이터
+  const stops = [
+    {
+      name: "성북구 출발",
+      lat: 37.6024, lng: 126.9887,
+      time: "08:00",
+      desc: "북악산로 847 · 1호차: 나·아내·세아·수아 / 2호차: 엄마·지수·임산부",
+      color: "#3498db", day: 0
+    },
+    {
+      name: "충주휴게소",
+      lat: 36.9659, lng: 127.8724,
+      time: "09:30~10:00",
+      desc: "아침 식사 겸 화장실 휴식 · 임산부 스트레칭",
+      color: "#3498db", day: 0
+    },
+    {
+      name: "이마트 제천점",
+      lat: 37.1327, lng: 128.1903,
+      time: "10:30 도착 후",
+      desc: "저녁 바베큐 고기 구매 (삼겹살, 목살, 채소 등)",
+      color: "#f39c12", day: 1
+    },
+    {
+      name: "의림지",
+      lat: 37.1392, lng: 128.1928,
+      time: "11:00~12:30",
+      desc: "둘레 1.8km 완전 평지 · 수양버들·봄꽃 · 무료 · 임산부 최적",
+      warn: "★ 임산부 적합도 최상",
+      color: "#27ae60", day: 1
+    },
+    {
+      name: "점심 — 황기닭백숙 (제천 시내)",
+      lat: 37.1330, lng: 128.1913,
+      time: "12:30~14:00",
+      desc: "제천 특산 황기 보양식 · 황기닭백숙 또는 황기족발",
+      color: "#f39c12", day: 1
+    },
+    {
+      name: "청풍문화재단지",
+      lat: 37.0265, lng: 128.1432,
+      time: "14:30~16:00",
+      desc: "충주댐 수몰 문화재 야외 박물관 · 어른 3,000원 · 역사 체험",
+      color: "#27ae60", day: 1
+    },
+    {
+      name: "청풍나루 유람선",
+      lat: 37.0283, lng: 128.1413,
+      time: "16:00~16:45",
+      desc: "옥순봉·구담봉 왕복 1시간 · 어른 약 13,000원 · 043-647-4566",
+      warn: "⚠ 임산부 주치의 확인 후 선택",
+      color: "#27ae60", day: 1
+    },
+    {
+      name: "제천 경찰 수련원",
+      lat: 37.0305, lng: 128.1478,
+      time: "17:00 체크인",
+      desc: "청풍면 청풍호로 1069 인근 · 1박",
+      color: "#e74c3c", day: 1
+    },
+    {
+      name: "저녁 — 숙소 바베큐",
+      lat: 37.0305, lng: 128.1478,
+      time: "18:30~20:30",
+      desc: "삼겹살·목살·버섯·소시지 구워먹기 · 아이들 마시멜로",
+      color: "#f39c12", day: 1
+    },
+    {
+      name: "월악산 송계계곡",
+      lat: 36.9173, lng: 128.0832,
+      time: "09:00~11:00",
+      desc: "계곡 입구~덕주사 약 2km · 완만한 경사 · 봄 새싹·마애불",
+      warn: "⚠ 계곡 노면 미끄럼 주의",
+      color: "#9b59b6", day: 2
+    },
+    {
+      name: "점심 — 덕주골산장 (1순위)",
+      lat: 36.9155, lng: 128.0845,
+      time: "11:30~13:00",
+      desc: "산채비빔밥 10,000원 · 버섯전골 · 손두부 · 계곡 바로 옆 · 043-653-8352",
+      warn: "★ 담백한 향토 음식 · 방문 전 전화 필수 (비성수기 임시휴업 가능)",
+      color: "#f39c12", day: 2
+    },
+    {
+      name: "점심 — 월악산장 (2순위/대안)",
+      lat: 36.9168, lng: 128.0821,
+      time: "11:30~13:00",
+      desc: "더덕구이 · 도토리묵무침 · 청국장정식 · 감자전 · 연중무휴 · 043-651-5615",
+      color: "#f39c12", day: 2
+    },
+    {
+      name: "서울 귀경",
+      lat: 37.6024, lng: 126.9887,
+      time: "13:30 출발 → 16:00 도착",
+      desc: "성북구 북악산로 847",
+      color: "#3498db", day: 2
+    }
+  ];
+
+  // 지도 초기화 (서울~제천 중간 정도)
+  const map = L.map('map').setView([37.15, 128.05], 9);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18
+  }).addTo(map);
+
+  // Day별 경로 색상
+  const routeColors = { 0: '#3498db', 1: '#27ae60', 2: '#9b59b6' };
+
+  // 경로 선 (순서대로)
+  const allCoords = stops.map(s => [s.lat, s.lng]);
+
+  // Day 0~1 경로 (서울→충주→제천 이동)
+  L.polyline(
+    stops.slice(0, 5).map(s => [s.lat, s.lng]),
+    { color: '#3498db', weight: 3, opacity: 0.6, dashArray: '8,6' }
+  ).addTo(map);
+
+  // Day 1 제천 내 동선
+  L.polyline(
+    stops.slice(4, 9).map(s => [s.lat, s.lng]),
+    { color: '#27ae60', weight: 3, opacity: 0.7 }
+  ).addTo(map);
+
+  // Day 2 동선
+  L.polyline(
+    [stops[7], stops[9], stops[10], stops[12]].map(s => [s.lat, s.lng]),
+    { color: '#9b59b6', weight: 3, opacity: 0.7 }
+  ).addTo(map);
+
+  // 마커 생성
+  const markers = [];
+
+  stops.forEach((stop, idx) => {
+    const label = idx === 0 ? 'S' : idx === 12 ? 'E' : idx;
+
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="
+        width:30px; height:30px; border-radius:50%;
+        background:${stop.color};
+        border: 3px solid white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        display:flex; align-items:center; justify-content:center;
+        color:white; font-size:11px; font-weight:700;
+        font-family: 'Apple SD Gothic Neo', sans-serif;
+      ">${label}</div>`,
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+      popupAnchor: [0, -18]
+    });
+
+    const marker = L.marker([stop.lat, stop.lng], { icon }).addTo(map);
+
+    const warnHtml = stop.warn
+      ? `<div class="popup-warn">${stop.warn}</div>` : '';
+
+    marker.bindPopup(`
+      <div>
+        <div class="popup-header" style="background:${stop.color}">${stop.name}</div>
+        <div class="popup-body">
+          <div class="popup-time">${stop.time}</div>
+          <div>${stop.desc}</div>
+          ${warnHtml}
+        </div>
+      </div>
+    `, { className: 'custom-popup', maxWidth: 260 });
+
+    markers.push(marker);
+
+    // 사이드바 클릭과 마커 연동
+    marker.on('click', () => {
+      document.querySelectorAll('.stop-item').forEach(el => el.classList.remove('active'));
+      const el = document.querySelector(`[data-idx="${idx}"]`);
+      if (el) {
+        el.classList.add('active');
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  });
+
+  // flyTo 함수 (사이드바 클릭 시)
+  function flyTo(idx) {
+    const stop = stops[idx];
+    map.flyTo([stop.lat, stop.lng], 14, { duration: 1.2 });
+    markers[idx].openPopup();
+    document.querySelectorAll('.stop-item').forEach(el => el.classList.remove('active'));
+    document.querySelector(`[data-idx="${idx}"]`).classList.add('active');
+  }
+
+  // 전체 경로가 보이도록 fit
+  const bounds = L.latLngBounds(allCoords);
+  map.fitBounds(bounds, { padding: [40, 40] });
+
+  // ── 주변 추천 장소 ──────────────────────────────────────
+  const refPlaces = [
+    // 제천 시내권
+    {
+      name: "청전 약초시장",
+      cat: "쇼핑·시장", icon: "🌿",
+      lat: 37.1335, lng: 128.1952,
+      desc: "조선 3대 약령시 전통 약초 시장. 황기·당귀·더덕 구매 가능. 의림지 인근.",
+      catColor: "#16a085"
+    },
+    {
+      name: "제천 의병기념관",
+      cat: "역사·문화", icon: "🏛",
+      lat: 37.1289, lng: 128.1876,
+      desc: "을미의병 역사 전시관. 아이들 역사 교육에 좋음. 무료 입장.",
+      catColor: "#8e44ad"
+    },
+    // 청풍호 권역
+    {
+      name: "청풍호반 케이블카",
+      cat: "전망·체험", icon: "🚡",
+      lat: 37.0205, lng: 128.1338,
+      desc: "편도 약 2.3km, 청풍호 전경 조망. ⚠️ 임산부 탑승 주의 — 하부 전망대에서 뷰 감상 대안.",
+      catColor: "#2980b9"
+    },
+    {
+      name: "옥순봉·구담봉 전망대",
+      cat: "전망·체험", icon: "🏔",
+      lat: 37.0083, lng: 128.1178,
+      desc: "유람선에서 보이는 절경 포인트. 한국의 소금강. 육로 접근은 제한적, 유람선 탑승 권장.",
+      catColor: "#2980b9"
+    },
+    {
+      name: "청풍랜드",
+      cat: "레저·체험", icon: "🎢",
+      lat: 37.0221, lng: 128.1351,
+      desc: "청풍호 인근 테마파크. 아이들용 놀이시설, 짚라인 등. 케이블카와 인접.",
+      catColor: "#e67e22"
+    },
+    {
+      name: "탁사정계곡",
+      cat: "자연·계곡", icon: "💧",
+      lat: 37.0558, lng: 128.1784,
+      desc: "청풍면 인근 계곡. 여름 피서지로 유명하나 봄 산책로도 좋음. 조용한 분위기.",
+      catColor: "#27ae60"
+    },
+    // 월악산 권역
+    {
+      name: "덕주사",
+      cat: "역사·문화", icon: "🛕",
+      lat: 36.9272, lng: 128.0788,
+      desc: "송계계곡 안 사찰. 마애불(보물)이 유명. 계곡 산책 중 자연스럽게 들를 수 있음.",
+      catColor: "#8e44ad"
+    },
+    {
+      name: "월악산 국립공원 탐방안내소",
+      cat: "자연·정보", icon: "🌲",
+      lat: 36.9194, lng: 128.0754,
+      desc: "입장·트레킹 정보 제공. 송계계곡 진입 전 들러서 노면 상태·탐방로 확인 가능.",
+      catColor: "#27ae60"
+    },
+    // 기타 제천
+    {
+      name: "배론성지",
+      cat: "역사·문화", icon: "⛪",
+      lat: 37.0855, lng: 128.0978,
+      desc: "조선 천주교 박해 순교 성지. 아름다운 골짜기 안에 위치, 조용한 산책 가능. 임산부도 편안히 방문.",
+      catColor: "#8e44ad"
+    },
+    {
+      name: "박달재",
+      cat: "드라이브·뷰", icon: "🚗",
+      lat: 37.0393, lng: 128.0645,
+      desc: "\"울고 넘는 박달재\" 민요의 배경. 드라이브 코스. 정상 전망대에서 제천 시내 조망.",
+      catColor: "#7f8c8d"
+    },
+    {
+      name: "제천 자드락길 (청풍호 자전거길)",
+      cat: "트레킹·산책", icon: "🚴",
+      lat: 37.0351, lng: 128.1623,
+      desc: "청풍호 둘레 자전거·도보길. 봄 경치 아름다움. 임산부는 짧은 구간만 가능.",
+      catColor: "#27ae60"
+    },
+  ];
+
+  const catColors = {};
+  const refMarkers = [];
+  let refVisible = true;
+
+  // 카테고리별 아이콘 마커
+  refPlaces.forEach((p, i) => {
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="
+        width:32px; height:32px; border-radius:8px;
+        background:${p.catColor};
+        border: 2.5px solid white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        display:flex; align-items:center; justify-content:center;
+        font-size:15px; cursor:pointer;
+      ">${p.icon}</div>`,
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
+      popupAnchor: [0, -20]
+    });
+
+    const m = L.marker([p.lat, p.lng], { icon }).addTo(map);
+    m.bindPopup(`
+      <div>
+        <div class="popup-header" style="background:${p.catColor}">${p.icon} ${p.name}</div>
+        <div class="popup-body">
+          <div class="popup-time" style="color:${p.catColor};font-weight:600;">${p.cat}</div>
+          <div>${p.desc}</div>
+        </div>
+      </div>
+    `, { className: 'custom-popup', maxWidth: 260 });
+    refMarkers.push(m);
+  });
+
+  // 패널 목록 렌더링
+  const refList = document.getElementById('ref-list');
+  const grouped = {};
+  refPlaces.forEach((p, i) => {
+    if (!grouped[p.cat]) grouped[p.cat] = [];
+    grouped[p.cat].push({ ...p, idx: i });
+  });
+
+  Object.entries(grouped).forEach(([cat, places]) => {
+    const catEl = document.createElement('div');
+    catEl.style.cssText = 'padding:6px 14px 2px;font-size:10px;font-weight:700;color:#888;letter-spacing:0.5px;text-transform:uppercase;';
+    catEl.textContent = cat;
+    refList.appendChild(catEl);
+
+    places.forEach(p => {
+      const el = document.createElement('div');
+      el.style.cssText = 'padding:7px 14px;cursor:pointer;border-bottom:1px solid #f5f5f5;display:flex;align-items:flex-start;gap:8px;';
+      el.innerHTML = `
+        <span style="font-size:16px;margin-top:1px;">${p.icon}</span>
+        <div>
+          <div style="font-size:12px;font-weight:600;color:#222;">${p.name}</div>
+          <div style="font-size:11px;color:#888;margin-top:1px;line-height:1.3;">${p.desc.split('.')[0]}.</div>
+        </div>
+      `;
+      el.addEventListener('mouseover', () => el.style.background = '#f8f9fa');
+      el.addEventListener('mouseout', () => el.style.background = '');
+      el.addEventListener('click', () => {
+        map.flyTo([p.lat, p.lng], 15, { duration: 1.2 });
+        refMarkers[p.idx].openPopup();
+      });
+      refList.appendChild(el);
+    });
+  });
+
+  // 패널 토글
+  const refPanel = document.getElementById('ref-panel');
+  refPanel.style.display = 'block';
+
+  function toggleRef() {
+    refVisible = !refVisible;
+    refMarkers.forEach(m => refVisible ? m.addTo(map) : map.removeLayer(m));
+    refPanel.style.display = refVisible ? 'block' : 'none';
+    document.getElementById('refToggleLabel').textContent = refVisible ? '추천장소 숨기기' : '추천장소 보기';
+  }
+</script>
+</body>
+</html>
