@@ -295,6 +295,228 @@
       font-weight: 600;
     }
 
+    /* 상단 경고 배지 */
+    .warn-top-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #FFF3CD;
+      color: #d68910;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 8px;
+      margin-bottom: 5px;
+      border: 1px solid #ffe08a;
+    }
+
+    /* 진행중 배지 */
+    .now-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: linear-gradient(135deg, #FF85A1, #C77DFF);
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 10px;
+      margin-bottom: 5px;
+      animation: nowPulse 2s ease-in-out infinite;
+    }
+    @keyframes nowPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* 임산부 정보 행 */
+    .preg-info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed #F0D6E8;
+    }
+    .preg-info-chip {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      color: #c0426e;
+      background: #fff0f7;
+      border-radius: 8px;
+      padding: 2px 7px;
+    }
+
+    /* 카카오맵 네비 버튼 — 콤팩트 우측 정렬 */
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      background: #FEE500;
+      color: #3C1E1E;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 20px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .nav-btn:hover { opacity: 0.85; }
+
+    /* 다녀왔어요 체크 버튼 */
+    .check-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      background: #f0f0f0;
+      color: #888;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 20px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .check-btn:hover { background: #e0f7ee; color: #27ae60; }
+    .stop-card.checked .check-btn {
+      background: #e0f7ee;
+      color: #27ae60;
+    }
+    .stop-card.checked .stop-body {
+      opacity: 0.6;
+    }
+    .stop-card.checked .stop-dot {
+      filter: grayscale(0.4);
+    }
+
+    /* 진행률 바 */
+    #progress-bar-wrap {
+      padding: 6px 14px 0;
+      flex-shrink: 0;
+    }
+    #progress-label {
+      font-size: 10px;
+      color: var(--sub);
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    #progress-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    #progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      border-radius: 4px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* 비상 연락처 버튼 */
+    #emergency-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: white;
+      border: 2px solid #FF6B6B;
+      border-radius: 20px;
+      padding: 6px 14px;
+      color: #FF6B6B;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(255,107,107,0.3);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    #emergency-btn:hover { background: #FF6B6B; color: white; }
+
+    #emergency-panel {
+      position: absolute;
+      bottom: 60px;
+      left: 20px;
+      z-index: 1000;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(255,107,107,0.2);
+      border: 1.5px solid #ffd5d5;
+      width: 240px;
+      overflow: hidden;
+      display: none;
+    }
+    #emergency-panel-head {
+      background: linear-gradient(135deg, #FF6B6B, #FF9F43);
+      padding: 10px 14px;
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .emergency-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      border-bottom: 1px solid #fff0f0;
+      font-size: 11px;
+    }
+    .emergency-item:last-child { border-bottom: none; }
+    .emergency-name { font-weight: 600; color: var(--text); }
+    .emergency-actions { display: flex; gap: 6px; }
+    .emergency-call {
+      background: #fff0f0;
+      color: #FF6B6B;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .emergency-map {
+      background: #FEE500;
+      color: #3C1E1E;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* 마커 활성 링 */
+    @keyframes markerRing {
+      0%   { transform: scale(1);   opacity: 0.8; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+    .marker-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 3px solid var(--pink);
+      animation: markerRing 1.2s ease-out infinite;
+      pointer-events: none;
+    }
+    .marker-ring.day2 { border-color: var(--day2); }
+
     /* Travel time indicator between cards */
     .travel-row {
       display: flex;
@@ -452,8 +674,8 @@
     <button id="nearby-toggle-btn" onclick="toggleNearby()">📍 주변 명소</button>
   </div>
   <div id="header-stats">
-    <div class="stat-chip">👨‍👩‍👧‍👧 가족 일행</div>
-    <div class="stat-chip">🚗 차량 2대</div>
+    <div class="stat-chip">👨‍👩‍👧‍👧 7명</div>
+    <div class="stat-chip">🚗 2대</div>
     <div class="stat-chip">🌙 1박 2일</div>
     <div class="stat-chip">🤰 임산부 동반</div>
     <div class="stat-chip">🎀 초등학생 동반</div>
@@ -475,6 +697,10 @@
         <span class="tab-date">3/29 일요일</span>
       </div>
     </div>
+    <div id="progress-bar-wrap">
+      <div id="progress-label">0 / 0 완료</div>
+      <div id="progress-bar"><div id="progress-fill"></div></div>
+    </div>
     <div id="timeline-area">
       <div class="timeline" id="timeline-day1"></div>
       <div class="timeline day2" id="timeline-day2" style="display:none;"></div>
@@ -484,11 +710,46 @@
   <div id="map"></div>
 </div>
 
+<!-- ── EMERGENCY BUTTON ── -->
+<button id="emergency-btn" onclick="toggleEmergency()">🚨 비상 연락처</button>
+<div id="emergency-panel">
+  <div id="emergency-panel-head">🚨 제천 비상 연락처</div>
+  <div class="emergency-item">
+    <span class="emergency-name">제천의료원</span>
+    <div class="emergency-actions">
+      <a class="emergency-call" href="tel:043-649-6114">📞 전화</a>
+      <a class="emergency-map" href="https://map.kakao.com/link/to/제천의료원,37.1429,128.2054" target="_blank">🗺️</a>
+    </div>
+  </div>
+  <div class="emergency-item">
+    <span class="emergency-name">제천성모병원 (산부인과)</span>
+    <div class="emergency-actions">
+      <a class="emergency-call" href="tel:043-641-1234">📞 전화</a>
+      <a class="emergency-map" href="https://map.kakao.com/link/to/제천성모병원,37.1341,128.1918" target="_blank">🗺️</a>
+    </div>
+  </div>
+  <div class="emergency-item">
+    <span class="emergency-name">유람선 매표소</span>
+    <div class="emergency-actions">
+      <a class="emergency-call" href="tel:043-647-4566">📞 전화</a>
+    </div>
+  </div>
+  <div class="emergency-item">
+    <span class="emergency-name">119 응급</span>
+    <div class="emergency-actions">
+      <a class="emergency-call" href="tel:119">📞 119</a>
+    </div>
+  </div>
+</div>
+
 <!-- ── NEARBY PANEL ── -->
 <div id="nearby-panel" style="display:none;">
-  <div id="nearby-panel-head">
-    <h3>✨ 주변 추천 명소</h3>
-    <p>일정 외 들르기 좋은 곳들</p>
+  <div id="nearby-panel-head" style="display:flex;align-items:flex-start;justify-content:space-between;">
+    <div>
+      <h3>✨ 주변 추천 명소</h3>
+      <p>일정 외 들르기 좋은 곳들</p>
+    </div>
+    <button onclick="toggleNearby()" style="background:rgba(255,255,255,0.25);border:none;border-radius:50%;width:24px;height:24px;color:white;font-size:14px;cursor:pointer;line-height:1;flex-shrink:0;margin-top:1px;">✕</button>
   </div>
   <div id="cat-filters">
     <div class="cat-btn active" onclick="filterCat(this,'전체')">전체</div>
@@ -507,7 +768,7 @@
 const day1Stops = [
   {
     icon: '🏠', color: '#54A0FF',
-    time: '08:00', dur: '',
+    time: '08:00', dur: '', startMins: 480,
     name: '서울 출발',
     desc: '차량 2대 동시 출발',
     tags: [{ t:'자가용 2대', c:'drive' }],
@@ -516,25 +777,27 @@ const day1Stops = [
   },
   {
     icon: '🍱', color: '#FF9F43',
-    time: '09:30 – 10:00', dur: '30분',
+    time: '09:30 – 10:00', dur: '30분', startMins: 570,
     name: '충주휴게소',
     desc: '아침 식사 겸 휴식 · 임산부 스트레칭 · 화장실',
     tags: [{ t:'임산부 휴식', c:'preg' }],
+    pregInfo: { toilet: '✅ 휴게소 내', walk: '평지', parking: '무료 넓음' },
     lat: 36.9659, lng: 127.8724,
     travelAfter: '약 40분 고속도로'
   },
   {
     icon: '🛒', color: '#FF9F43',
-    time: '10:30 도착 후', dur: '30분',
+    time: '10:30 도착 후', dur: '30분', startMins: 630,
     name: '이마트 제천점',
     desc: '저녁 바베큐 재료 구매 · 삼겹살·목살·채소·소시지',
     tags: [{ t:'쇼핑', c:'food' }],
+    pregInfo: { toilet: '✅ 매장 내', walk: '실내 평지', parking: '무료' },
     lat: 37.1327, lng: 128.1903,
     travelAfter: '도보 or 차 5분'
   },
   {
     icon: '🌿', color: '#26de81',
-    time: '11:00 – 12:30', dur: '1시간 30분',
+    time: '11:00 – 12:30', dur: '1시간 30분', startMins: 660,
     name: '의림지 산책',
     desc: '삼국시대 한국 최고(最古) 저수지 · 둘레 1.8km 완전 평지 · 수양버들 봄 경치',
     tags: [
@@ -543,24 +806,26 @@ const day1Stops = [
       { t:'아이 좋아요', c:'kids' }
     ],
     warn: '벚꽃 일부 개화 중! 🌸',
+    pregInfo: { toilet: '✅ 공원 내 2개소', walk: '1.8km 완전 평지', parking: '무료 넓음' },
     lat: 37.1392, lng: 128.1928,
     travelAfter: '차 5분'
   },
   {
     icon: '🍗', color: '#FF9F43',
-    time: '12:30 – 14:00', dur: '1시간 30분',
+    time: '12:30 – 14:00', dur: '1시간 30분', startMins: 750,
     name: '점심 — 황기닭백숙',
     desc: '제천 특산 황기(약초) 보양식 · 의림지 인근 제천 시내',
     tags: [
       { t:'황기족발도 추천', c:'food' },
       { t:'임산부 보양식 ✅', c:'preg' }
     ],
+    pregInfo: { toilet: '✅ 식당 내', walk: '도보 3분 이내', parking: '가능' },
     lat: 37.1330, lng: 128.1913,
     travelAfter: '차 25~30분'
   },
   {
     icon: '🏯', color: '#C77DFF',
-    time: '14:30 – 16:00', dur: '1시간 30분',
+    time: '14:30 – 16:00', dur: '1시간 30분', startMins: 870,
     name: '청풍문화재단지',
     desc: '충주댐 수몰 문화재 이전 야외 박물관 · 고려·조선 건축물 43점',
     tags: [
@@ -568,12 +833,13 @@ const day1Stops = [
       { t:'역사 체험', c:'kids' },
       { t:'임산부 완만', c:'preg' }
     ],
+    pregInfo: { toilet: '✅ 단지 내', walk: '완만한 경사', parking: '무료' },
     lat: 37.0265, lng: 128.1432,
     travelAfter: '도보 3분'
   },
   {
     icon: '⛵', color: '#54A0FF',
-    time: '16:00 – 16:45', dur: '45분',
+    time: '16:00 – 16:45', dur: '45분', startMins: 960,
     name: '청풍나루 유람선',
     desc: '옥순봉·구담봉 왕복 1시간 코스 · 어른 약 13,000원 · 043-647-4566',
     tags: [
@@ -581,21 +847,23 @@ const day1Stops = [
       { t:'아이 좋아요', c:'kids' }
     ],
     warn: '⚠️ 임산부 주치의 확인 후 결정 · 불참 시 청풍나루 카페 휴식',
+    pregInfo: { toilet: '✅ 선내 있음', walk: '선착장 10m', parking: '선착장 인근' },
     lat: 37.0283, lng: 128.1413,
     travelAfter: '차 5~10분'
   },
   {
     icon: '🏨', color: '#FF6B6B',
-    time: '17:00 체크인', dur: '',
+    time: '17:00 체크인', dur: '', startMins: 1020,
     name: '청풍면 숙소',
-    desc: '청풍면 청풍호 인근 · 1박',
+    desc: '청풍면 청풍호로 1069 인근 · 1박',
     tags: [{ t:'숙소', c:'hotel' }],
+    pregInfo: { toilet: '✅ 건물 내', walk: '평지', parking: '무료 넓음' },
     lat: 37.0305, lng: 128.1478,
     travelAfter: '숙소 휴식'
   },
   {
     icon: '🔥', color: '#FF9F43',
-    time: '18:30 – 20:30', dur: '2시간',
+    time: '18:30 – 20:30', dur: '2시간', startMins: 1110,
     name: '저녁 — 숙소 바베큐',
     desc: '삼겹살·목살·버섯 직화구이 · 아이들 소시지·마시멜로 🍡',
     tags: [
@@ -610,7 +878,7 @@ const day1Stops = [
 const day2Stops = [
   {
     icon: '🌊', color: '#9B8FFF',
-    time: '08:30 체크아웃', dur: '',
+    time: '08:30 체크아웃', dur: '', startMins: 510,
     name: '숙소 체크아웃',
     desc: '짐 정리 후 출발',
     tags: [],
@@ -619,7 +887,7 @@ const day2Stops = [
   },
   {
     icon: '🌲', color: '#26de81',
-    time: '09:00 – 11:00', dur: '2시간',
+    time: '09:00 – 11:00', dur: '2시간', startMins: 540,
     name: '월악산 송계계곡 산책',
     desc: '계곡 입구 → 덕주사 구간 약 2km · 완만한 포장길 · 봄 새싹 · 마애불(보물)',
     tags: [
@@ -628,25 +896,27 @@ const day2Stops = [
       { t:'아이 좋아요', c:'kids' }
     ],
     warn: '⚠️ 계곡 노면 미끄럼 주의 · 방수 신발 추천',
+    pregInfo: { toilet: '⚠️ 탐방안내소 인근', walk: '2km 경사 있음', parking: '무료' },
     lat: 36.9173, lng: 128.0832,
     travelAfter: '차 20분'
   },
   {
     icon: '🥗', color: '#FF9F43',
-    time: '11:30 – 13:00', dur: '1시간 30분',
+    time: '11:30 – 13:00', dur: '1시간 30분', startMins: 690,
     name: '점심 — 덕주골산장 (1순위)',
     desc: '산채비빔밥 10,000원 · 버섯전골 · 손두부 · 계곡 바로 옆\n📞 043-653-8352',
     tags: [
       { t:'담백 향토 음식', c:'food' },
       { t:'방문 전 전화 필수', c:'warn' }
     ],
-    warn: '비성수기 임시휴업 가능 → 전화 확인 후 출발! (대안: 월악산장 043-651-5615)',
+    warn: '비성수기 임시휴업 가능 → 전화 확인 후 출발!',
+    pregInfo: { toilet: '✅ 식당 내', walk: '평지', parking: '무료' },
     lat: 36.9155, lng: 128.0845,
-    travelAfter: '귀경 출발'
+    travelAfter: '대안: 월악산장 (043-651-5615)'
   },
   {
     icon: '🚗', color: '#54A0FF',
-    time: '13:30 출발', dur: '약 2시간 30분',
+    time: '13:30 출발', dur: '약 2시간 30분', startMins: 810,
     name: '서울 귀경',
     desc: '15:30~16:00 도착 예상',
     tags: [{ t:'귀가', c:'drive' }],
@@ -729,16 +999,19 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // ── ROUTES ──────────────────────────────────────────────────────────────────
 
+// 서울→제천 이동 점선
 L.polyline(
   [day1Stops[0], day1Stops[1], day1Stops[2]].map(s => [s.lat, s.lng]),
   { color: '#54A0FF', weight: 3, opacity: 0.5, dashArray: '8,6' }
 ).addTo(map);
 
+// Day 1 동선
 L.polyline(
   day1Stops.slice(2).map(s => [s.lat, s.lng]),
   { color: '#FF85A1', weight: 3.5, opacity: 0.7 }
 ).addTo(map);
 
+// Day 2 동선
 L.polyline(
   day2Stops.map(s => [s.lat, s.lng]),
   { color: '#9B8FFF', weight: 3.5, opacity: 0.7 }
@@ -746,7 +1019,7 @@ L.polyline(
 
 // ── MARKER FACTORY ──────────────────────────────────────────────────────────
 
-function makeStopMarker(stop) {
+function makeStopMarker(stop, label, isDay2) {
   const icon = L.divIcon({
     className: '',
     html: `<div style="
@@ -788,8 +1061,8 @@ function makeStopMarker(stop) {
 
 // ── BUILD MARKERS ────────────────────────────────────────────────────────────
 
-const day1Markers = day1Stops.map(stop => makeStopMarker(stop));
-const day2Markers = day2Stops.map(stop => makeStopMarker(stop));
+const day1Markers = day1Stops.map((stop, i) => makeStopMarker(stop, i + 1, false));
+const day2Markers = day2Stops.map((stop, i) => makeStopMarker(stop, i + 1, true));
 
 const allCoords = [...day1Stops, ...day2Stops].map(s => [s.lat, s.lng]);
 map.fitBounds(L.latLngBounds(allCoords), { padding: [40, 40] });
@@ -797,9 +1070,10 @@ map.fitBounds(L.latLngBounds(allCoords), { padding: [40, 40] });
 // ── REF MARKERS ─────────────────────────────────────────────────────────────
 
 const refMarkers = [];
-let refVisible = false;
+let refVisible = true;
+let panelVisible = false;
 
-refPlaces.forEach((p) => {
+refPlaces.forEach((p, i) => {
   const icon = L.divIcon({
     className: '',
     html: `<div style="
@@ -815,7 +1089,7 @@ refPlaces.forEach((p) => {
     popupAnchor: [0, -20]
   });
 
-  const m = L.marker([p.lat, p.lng], { icon });
+  const m = L.marker([p.lat, p.lng], { icon }).addTo(map);
   m.bindPopup(`
     <div>
       <div class="popup-head" style="background:${p.textColor}">${p.icon} ${p.name}</div>
@@ -835,54 +1109,75 @@ refPlaces.forEach((p) => {
 // ── SIDEBAR TIMELINE BUILDER ─────────────────────────────────────────────────
 
 let currentDay = 1;
+let activeCardEl = null;
 
 function buildTimeline(stops, markers, containerId, isDay2) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
+  const accentColor = isDay2 ? '#9B8FFF' : '#FF85A1';
 
   stops.forEach((stop, i) => {
+    // Card
     const card = document.createElement('div');
-    card.className = 'stop-card' + (isDay2 ? ' day2' : '');
+    const checkKey = `${isDay2 ? 2 : 1}_${i}`;
+    const isChecked = getCheckedSet().has(checkKey);
+    card.className = 'stop-card' + (isDay2 ? ' day2' : '') + (isChecked ? ' checked' : '');
     card.dataset.idx = i;
+    card.dataset.checkKey = checkKey;
 
     const tagsHtml = (stop.tags || []).map(tag =>
       `<span class="tag tag-${tag.c}">${tag.t}</span>`
     ).join('');
 
-    const warnHtml = stop.warn
-      ? `<div class="stop-warn-row">⚠️ <span>${stop.warn}</span></div>`
+    const warnTopHtml = stop.warn
+      ? `<div class="warn-top-badge">⚠️ ${stop.warn}</div>`
       : '';
 
     const durHtml = stop.dur
       ? `<span class="stop-dur-badge">⏱ ${stop.dur}</span>`
       : '';
 
+    const pregInfoHtml = stop.pregInfo
+      ? `<div class="preg-info-row">
+          <span style="font-size:10px;color:#c0426e;font-weight:700;align-self:center;">🤰</span>
+          <span class="preg-info-chip">🚻 ${stop.pregInfo.toilet}</span>
+          <span class="preg-info-chip">🚶 ${stop.pregInfo.walk}</span>
+          <span class="preg-info-chip">🅿️ ${stop.pregInfo.parking}</span>
+        </div>`
+      : '';
+
+    const isNavStop = stop.lat && stop.lng && stop.name !== '서울 출발' && stop.name !== '서울 귀경';
+    const navUrl = `https://map.kakao.com/link/to/${encodeURIComponent(stop.name)},${stop.lat},${stop.lng}`;
+
     card.innerHTML = `
       <div class="stop-dot-col">
-        <div class="stop-dot" style="background:${stop.color}">${stop.icon}</div>
+        <div class="stop-dot" style="background:${stop.color};position:relative;">${stop.icon}</div>
         ${i < stops.length - 1 ? '<div class="stop-connector"></div>' : ''}
       </div>
       <div class="stop-body">
-        <div class="stop-time-row">
+        <div class="badge-row">${warnTopHtml}</div>
+        <div class="stop-name">${stop.name}</div>
+        <div class="stop-time-row" style="margin-bottom:4px;margin-top:2px;">
           <span class="stop-time">${stop.time}</span>
           ${durHtml}
         </div>
-        <div class="stop-name">${stop.name}</div>
         <div class="stop-desc">${stop.desc}</div>
         ${tagsHtml ? `<div class="stop-tags">${tagsHtml}</div>` : ''}
-        ${warnHtml}
+        ${pregInfoHtml}
+        <div class="card-footer">
+          <button class="check-btn" onclick="toggleCheck(event, this)">${isChecked ? '✓ 다녀왔어요!' : '✓ 다녀왔어요'}</button>
+          ${isNavStop ? `<a class="nav-btn" href="${navUrl}" target="_blank">🗺️ 길찾기</a>` : ''}
+        </div>
       </div>
     `;
 
     card.addEventListener('click', () => {
-      container.querySelectorAll('.stop-card').forEach(c => c.classList.remove('active'));
-      card.classList.add('active');
-      map.flyTo([stop.lat, stop.lng], 14, { duration: 1.2 });
-      markers[i].openPopup();
+      activateStop(container, markers, card, stop, i, isDay2);
     });
 
     container.appendChild(card);
 
+    // Travel row
     if (stop.travelAfter && i < stops.length - 1) {
       const tr = document.createElement('div');
       tr.className = 'travel-row';
@@ -891,23 +1186,54 @@ function buildTimeline(stops, markers, containerId, isDay2) {
     }
   });
 
+  // Sync marker click → sidebar highlight
   markers.forEach((m, i) => {
     m.on('click', () => {
       if (currentDay !== (isDay2 ? 2 : 1)) showDay(isDay2 ? 2 : 1);
       setTimeout(() => {
         const cards = container.querySelectorAll('.stop-card');
-        cards.forEach(c => c.classList.remove('active'));
-        if (cards[i]) {
-          cards[i].classList.add('active');
-          cards[i].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
+        if (cards[i]) activateStop(container, markers, cards[i], stops[i], i, isDay2);
       }, 50);
     });
   });
 }
 
+// ── ACTIVATE STOP ─────────────────────────────────────────────────────────────
+
+let activeMarkerEl = null;
+
+function activateStop(container, markers, card, stop, idx, isDay2) {
+  // 사이드바 카드 활성화
+  document.querySelectorAll('.stop-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  // 이전 마커 ring 제거
+  if (activeMarkerEl) {
+    const prev = activeMarkerEl.querySelector('.marker-ring');
+    if (prev) prev.remove();
+  }
+
+  // 지도 이동 + 팝업
+  map.flyTo([stop.lat, stop.lng], 14, { duration: 1.2 });
+  markers[idx].openPopup();
+
+  // 마커 ring 추가
+  const markerContainer = markers[idx].getElement();
+  if (markerContainer) {
+    const existing = markerContainer.querySelector('.marker-ring');
+    if (existing) existing.remove();
+    const ring = document.createElement('div');
+    ring.className = 'marker-ring' + (isDay2 ? ' day2' : '');
+    markerContainer.style.overflow = 'visible';
+    markerContainer.appendChild(ring);
+    activeMarkerEl = markerContainer;
+  }
+}
+
 buildTimeline(day1Stops, day1Markers, 'timeline-day1', false);
 buildTimeline(day2Stops, day2Markers, 'timeline-day2', true);
+updateProgress();
 
 // ── NEARBY PANEL ─────────────────────────────────────────────────────────────
 
@@ -918,7 +1244,7 @@ function buildNearbyList(filter) {
     ? refPlaces
     : refPlaces.filter(p => p.cat === filter);
 
-  filtered.forEach((p) => {
+  filtered.forEach((p, i) => {
     const idx = refPlaces.indexOf(p);
     const el = document.createElement('div');
     el.className = 'nearby-item';
@@ -949,14 +1275,119 @@ function filterCat(btn, cat) {
 // ── TOGGLE NEARBY ────────────────────────────────────────────────────────────
 
 function toggleNearby() {
-  refVisible = !refVisible;
+  panelVisible = !panelVisible;
   const panel = document.getElementById('nearby-panel');
   const btn = document.getElementById('nearby-toggle-btn');
-  panel.style.display = refVisible ? 'flex' : 'none';
+  panel.style.display = panelVisible ? 'flex' : 'none';
   panel.style.flexDirection = 'column';
-  btn.textContent = refVisible ? '✕ 명소 닫기' : '📍 주변 명소';
-  refMarkers.forEach(m => refVisible ? m.addTo(map) : map.removeLayer(m));
+  btn.textContent = panelVisible ? '✕ 명소 닫기' : '📍 주변 명소';
 }
+
+// ── 현재 진행중 일정 자동 하이라이트 ─────────────────────────────────────────
+
+function highlightCurrentStop() {
+  const now = new Date();
+  // 여행 당일만 작동: 3/28 = day1, 3/29 = day2
+  const month = now.getMonth() + 1;
+  const date = now.getDate();
+  const mins = now.getHours() * 60 + now.getMinutes();
+
+  let targetStops, targetMarkers, containerId, isDay2;
+  if (month === 3 && date === 28) {
+    targetStops = day1Stops; targetMarkers = day1Markers;
+    containerId = 'timeline-day1'; isDay2 = false;
+  } else if (month === 3 && date === 29) {
+    targetStops = day2Stops; targetMarkers = day2Markers;
+    containerId = 'timeline-day2'; isDay2 = true;
+  } else {
+    return; // 여행 날 아니면 스킵
+  }
+
+  // 현재 시간에 해당하는 stop 찾기
+  let currentIdx = -1;
+  for (let i = 0; i < targetStops.length; i++) {
+    const s = targetStops[i];
+    if (s.startMins === undefined) continue;
+    const nextMins = targetStops[i + 1]?.startMins ?? 1440;
+    if (mins >= s.startMins && mins < nextMins) {
+      currentIdx = i;
+      break;
+    }
+  }
+  if (currentIdx === -1) return;
+
+  // 해당 Day 탭 활성화
+  showDay(isDay2 ? 2 : 1);
+
+  // 카드에 "진행중" 배지 추가 (경고 배지와 같은 행에, 경고 뒤에 위치)
+  setTimeout(() => {
+    const container = document.getElementById(containerId);
+    const cards = container.querySelectorAll('.stop-card');
+    // 기존 배지 제거
+    container.querySelectorAll('.now-badge').forEach(b => b.remove());
+    if (cards[currentIdx]) {
+      const badgeRow = cards[currentIdx].querySelector('.badge-row');
+      const badge = document.createElement('div');
+      badge.className = 'now-badge';
+      badge.textContent = '▶ 지금 여기!';
+      if (badgeRow) badgeRow.appendChild(badge);  // 경고 배지 뒤에 추가
+
+      // 카드 활성화 + 지도 이동
+      activateStop(container, targetMarkers, cards[currentIdx], targetStops[currentIdx], currentIdx, isDay2);
+    }
+  }, 300);
+}
+
+// 페이지 로드 시 실행 + 1분마다 갱신
+highlightCurrentStop();
+setInterval(highlightCurrentStop, 60000);
+
+// ── 체크 완료 토글 ────────────────────────────────────────────────────────────
+
+function getCheckedSet() {
+  try { return new Set(JSON.parse(localStorage.getItem('trip_checked') || '[]')); }
+  catch { return new Set(); }
+}
+function saveCheckedSet(set) {
+  localStorage.setItem('trip_checked', JSON.stringify([...set]));
+}
+
+function toggleCheck(e, btn) {
+  e.stopPropagation();
+  const card = btn.closest('.stop-card');
+  const key = card.dataset.checkKey;
+  card.classList.toggle('checked');
+  const isChecked = card.classList.contains('checked');
+  btn.textContent = isChecked ? '✓ 다녀왔어요!' : '✓ 다녀왔어요';
+  const set = getCheckedSet();
+  isChecked ? set.add(key) : set.delete(key);
+  saveCheckedSet(set);
+  updateProgress();
+}
+
+function updateProgress() {
+  const allCards = document.querySelectorAll('#timeline-day1 .stop-card, #timeline-day2 .stop-card');
+  const total = allCards.length;
+  const done = document.querySelectorAll('.stop-card.checked').length;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progress-label').textContent = `${done} / ${total} 완료`;
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+// ── 비상 연락처 토글 ──────────────────────────────────────────────────────────
+
+let emergencyOpen = false;
+function toggleEmergency() {
+  emergencyOpen = !emergencyOpen;
+  document.getElementById('emergency-panel').style.display = emergencyOpen ? 'block' : 'none';
+}
+// 패널 외부 클릭 시 닫기
+document.addEventListener('click', e => {
+  if (!e.target.closest('#emergency-btn') && !e.target.closest('#emergency-panel')) {
+    emergencyOpen = false;
+    document.getElementById('emergency-panel').style.display = 'none';
+  }
+});
 
 // ── DAY SWITCH ───────────────────────────────────────────────────────────────
 
@@ -970,6 +1401,7 @@ function showDay(day) {
   const focusStops = day === 1 ? day1Stops : day2Stops;
   const coords = focusStops.map(s => [s.lat, s.lng]);
   map.fitBounds(L.latLngBounds(coords), { padding: [50, 50], maxZoom: 12 });
+  updateProgress();
 }
 </script>
 </body>
